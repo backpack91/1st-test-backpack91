@@ -10,7 +10,6 @@ var DataMiner = {
   input : document.querySelector('.textInput'),
   chart : document.querySelector('.dataChart'),
   wordsWrapper : document.querySelector('.wordsWrapper'),
-  colorData : []
 };
 
 DataMiner.makeInputReact = function() {
