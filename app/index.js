@@ -5,20 +5,19 @@ import 'styles/index.less';
 // START YOUR APP HERE
 // ================================
 
-var DataMiner = {
-  countedWords : {},
-  input : document.querySelector('.textInput'),
-  chart : document.querySelector('.dataChart'),
-  wordsWrapper : document.querySelector('.wordsWrapper'),
+var DataMiner = function() {
+  this.input = document.querySelector('.textInput');
+  this.chart = document.querySelector('.dataChart');
+  this.wordsWrapper = document.querySelector('.wordsWrapper');
 };
 
-DataMiner.makeInputReact = function() {
-  this.input.addEventListener('keydown', function(event) {
-    DataMiner.judgeDatas();
-  })
-}
+DataMiner.prototype.makeInputReact = function() {
+  this.input.addEventListener('keydown', function() {
+    this.judgeDatas();
+  }.bind(this));
+};
 
-DataMiner.judgeDatas = function() {
+DataMiner.prototype.judgeDatas = function() {
   var stringData = this.input.value;
   var characters = stringData.split('');
   var words = stringData.split(' ');
@@ -31,7 +30,7 @@ DataMiner.judgeDatas = function() {
   }
 };
 
-DataMiner.filterWords = function(words) {
+DataMiner.prototype.filterWords = function(words) {
   var source = [];
 
   words.forEach(function(word) {
@@ -45,7 +44,7 @@ DataMiner.filterWords = function(words) {
   this.countWords(source);
 };
 
-DataMiner.countWords = function(source) {
+DataMiner.prototype.countWords = function(source) {
   var countWords = {};
 
   source.forEach(function(word) {
@@ -59,7 +58,7 @@ DataMiner.countWords = function(source) {
   this.printDatas(countWords);
 };
 
-DataMiner.printDatas = function(countWords) {
+DataMiner.prototype.printDatas = function(countWords) {
   for( var key in countWords ) {
     var newWord = document.createElement('div');
     var randomColor = this.makeRandomColor();
@@ -70,13 +69,14 @@ DataMiner.printDatas = function(countWords) {
   }
 };
 
-DataMiner.makeRandomColor = function() {
+DataMiner.prototype.makeRandomColor = function() {
   var letters = '0123456789ABCDEF';
   var color = '#';
   for (var i = 0; i < 6; i++) {
     color += letters[Math.floor(Math.random() * 16)];
   }
   return color;
-}
+};
 
-DataMiner.makeInputReact();
+var dataMiner = new DataMiner();
+dataMiner.makeInputReact();
