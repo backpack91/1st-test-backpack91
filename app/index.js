@@ -5,7 +5,7 @@ import 'styles/index.less';
 // START YOUR APP HERE
 // ================================
 
-var DataMiner = function() {
+function DataMiner() {
   this.input = document.querySelector('.textInput');
   this.chart = document.querySelector('.dataChart');
   this.wordsWrapper = document.querySelector('.wordsWrapper');
@@ -54,7 +54,6 @@ DataMiner.prototype.countWords = function(source) {
       countWords[word] += 1;
     }
   });
-
   this.printDatas(countWords);
 };
 
@@ -62,9 +61,15 @@ DataMiner.prototype.printDatas = function(countWords) {
   for( var key in countWords ) {
     var newWord = document.createElement('div');
     var randomColor = this.makeRandomColor();
-    newWord.innerText = key;
-    newWord.style = `font-size: ${countWords[key]*15}px; color: ${randomColor}`;
+    var left = Math.random()*100;
+    var top = Math.random()*100;
+
     newWord.classList.add('words');
+    newWord.innerText = key;
+    newWord.style = `font-size: ${countWords[key]*15}px; color: ${randomColor}; left : ${left}%; top : ${top}%;`;
+    // newWord.style += `left : ${left}%;`;
+    // newWord.style += `top : ${top}%;`;
+    // this.locateRandom(newWord);
     this.wordsWrapper.appendChild(newWord);
   }
 };
@@ -75,6 +80,7 @@ DataMiner.prototype.makeRandomColor = function() {
   for (var i = 0; i < 6; i++) {
     color += letters[Math.floor(Math.random() * 16)];
   }
+
   return color;
 };
 

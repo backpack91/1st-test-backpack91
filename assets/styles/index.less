@@ -48,12 +48,13 @@ html, body {
   border: solid 1px white;
   border-radius: 10px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   flex-wrap: wrap;
 }
 
 .textInput {
+  margin-top: 30px;
   width: 90%;
   height: 90%;
   border: solid 1px white;
@@ -64,15 +65,16 @@ html, body {
 }
 
 .words {
-  margin: 2px;
+  margin: 1px;
   color: white;
+  font-weight: 900;
+  position: absolute;
+  left: 80%;
+  top: 50%;
 }
 
 .wordsWrapper {
-  min-width: 200px;
-  min-height: 200px;
-  display: contents;
-  // justify-content: center;
-  // align-items: center;
-  // flex-wrap: wrap;
+  width: 65%;
+  height: 80%;
+  position: relative;
 }
