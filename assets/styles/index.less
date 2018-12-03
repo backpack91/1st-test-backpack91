@@ -48,13 +48,23 @@ html, body {
   border: solid 1px white;
   border-radius: 10px;
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
+  position: relative;
+}
+
+.characterLength {
+  width: 80%;
+  min-height: 20px;
+  color: white;
+  background-color: black;
+  margin-top: 40px;
+  text-align: center;
+  font-weight: bold;
 }
 
 .textInput {
-  margin-top: 30px;
   width: 90%;
   height: 90%;
   border: solid 1px white;
@@ -73,8 +83,44 @@ html, body {
   top: 50%;
 }
 
+.singleUsedWords {
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  background-color: white;
+  left: 10%;
+  top: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .wordsWrapper {
+  margin: 0 100px 50px 0;
   width: 65%;
   height: 80%;
   position: relative;
+}
+
+.hide {
+  display: none;
+}
+
+.alertMessage {
+  width: 200px;
+  height: 100px;
+  background-color: white;
+  border-radius: 10px;
+  color: black;
+  font-weight: 900;
+  font-size: 30px;
+  padding: 12px 0 0 10px;
+}
+
+.textShadowWhite {
+  text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+}
+
+.textShadowBlack {
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
