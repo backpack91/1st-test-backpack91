@@ -76,23 +76,27 @@ html, body {
 
 .words {
   margin: 1px;
-  color: white;
   font-weight: 900;
   position: absolute;
-  left: 80%;
-  top: 50%;
+  transition: all 0.5s;
 }
 
-.singleUsedWords {
+.singleUsedWord {
+  margin: 0 2px 0 2px;
+  font-weight: 900;
+  height: 20px;
+}
+
+.singleUsedWordsWrapper {
   position: absolute;
   width: 80%;
   height: 80%;
-  background-color: white;
+  background-color: black;
   left: 10%;
   top: 10%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-wrap: wrap;
+  // z-index: -1;
 }
 
 .wordsWrapper {
@@ -100,6 +104,60 @@ html, body {
   width: 65%;
   height: 80%;
   position: relative;
+}
+
+.oftenUsedWordsWrapper {
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  left: 10%;
+  top: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.leftPartWrapper {
+  width: 20%;
+  height: 100%;
+  margin: 1px;
+}
+
+.centerPartWrapper {
+  width: 60%;
+  height: 100%;
+  margin: 1px;
+}
+
+.rightPartWrapper {
+  width: 20%;
+  height: 100%;
+  margin: 1px;
+}
+
+.upperRandomLocatingChart {
+  position: relative;
+  width: 100%;
+  height: 30%;
+  margin-bottom: 40%;
+}
+
+.lowerRandomLocatingChart {
+  position: relative;
+  width: 100%;
+  height: 30%;
+}
+
+.leftRandomLocatingChart {
+  position: relative;
+  width: 30%;
+  height: 100%;
+}
+
+.rightRandomLocatingChart {
+  position: relative;
+  width: 30%;
+  height: 100%;
 }
 
 .hide {
@@ -122,5 +180,29 @@ html, body {
 }
 
 .textShadowBlack {
-  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  text-shadow: -3px 0 black, 0 3px black, 3px 0 black, 0 -3px black;
+}
+
+.hoveredCenter {
+  z-index: 10;
+  font-size: 80px;
+  margin: 1px;
+  font-weight: 900;
+  position: absolute;
+  display: flex;
+  // color: yellow;
+  background-color: yellow;
+  border-radius: 5px;
+}
+
+.hovered {
+  z-index: 10;
+  font-size: 50px;
+  margin: 1px;
+  font-weight: 900;
+  position: absolute;
+  display: flex;
+  // color: yellow;
+  background-color: yellow;
+  border-radius: 5px;
 }
