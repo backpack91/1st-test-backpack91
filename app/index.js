@@ -29,6 +29,7 @@ DataMiner.prototype.judgeDatas = function() {
   var characters = stringData.split('');
   var words = stringData.split(' ');
   var characterLength = document.querySelector('.characterLength');
+  var alertMessage;
 
   characterLength.innerText = `length: ${characters.length}`;
   if (document.querySelector('.alertMessage')) {
@@ -49,25 +50,28 @@ DataMiner.prototype.judgeDatas = function() {
     this.singleUsedWordsWrapper.classList.add('hide');
     this.wordsWrapper.classList.add('hide');
     this.oftenUsedWordsWrapper.classList.add('hide');
-    var alertMessage = document.createElement('div');
+    alertMessage = document.createElement('div');
     alertMessage.classList.add('alertMessage');
     alertMessage.innerText= "please type under 5000...";
     this.chart.appendChild(alertMessage);
   }
-
   characters.every(function(character) {
+    var alertMessage;
+
     if ((45032 < character.charCodeAt(0) && character.charCodeAt(0) < 55203) ||
     (12593 < character.charCodeAt(0) && character.charCodeAt(0) < 12622) ||
     (12623 < character.charCodeAt(0) && character.charCodeAt(0) < 12643)) {
       this.wordsWrapper.classList.add('hide');
       this.singleUsedWordsWrapper.classList.add('hide');
       this.oftenUsedWordsWrapper.classList.add('hide');
-      var alertMessage = document.createElement('div');
+      alertMessage = document.createElement('div');
       alertMessage.classList.add('alertMessage');
       alertMessage.innerText= "please type only ENGLISH";
       this.chart.appendChild(alertMessage);
+
       return false;
     } else {
+
       return true;
     }
   }.bind(this));
@@ -75,6 +79,12 @@ DataMiner.prototype.judgeDatas = function() {
 
 DataMiner.prototype.filterWords = function(words) {
   var source = [];
+  var exceptedWords = ['am', 'is', 'the', 'a', 'are', 'were',
+  'to', 'of', 'you', 'you\'re', 'your','it\'s', 'you\'ve',
+  'i\'m', 'this', 'she', 'he', 'there', 'it\'s', 'and', 'be',
+  'can', 'do', '', 'for', 'that', 'on', 'by', 'an', 'in',
+  'or', 'it', 'but', 'as', 'if', 'they', 'we', 'for',
+  'with', 'could', 'it’s', 'was', '+', '-', 'you’re', 'doesn’t'];
 
   words.forEach(function(word) {
     word = word.trim();
@@ -94,47 +104,7 @@ DataMiner.prototype.filterWords = function(words) {
     word[word.length-1] === '.') {
       word = word.slice(0, word.length-1);
     }
-    if (lowerCasedWord !== 'am' &&
-    lowerCasedWord !== 'is' &&
-    lowerCasedWord !== 'the' &&
-    lowerCasedWord !== 'a' &&
-    lowerCasedWord !== 'are' &&
-    lowerCasedWord !== 'were' &&
-    lowerCasedWord !== 'to' &&
-    lowerCasedWord !== 'of' &&
-    lowerCasedWord !== 'you' &&
-    lowerCasedWord !== 'you\'re' &&
-    lowerCasedWord !== 'your' &&
-    lowerCasedWord !== 'it\'s' &&
-    lowerCasedWord !== 'you\'ve' &&
-    lowerCasedWord !== 'i\'m' &&
-    lowerCasedWord !== 'this' &&
-    lowerCasedWord !== 'she' &&
-    lowerCasedWord !== 'he' &&
-    lowerCasedWord !== 'there' &&
-    lowerCasedWord !== 'it\'s' &&
-    lowerCasedWord !== 'and' &&
-    lowerCasedWord !== 'be' &&
-    lowerCasedWord !== 'can' &&
-    lowerCasedWord !== 'do' &&
-    lowerCasedWord !== '' &&
-    lowerCasedWord !== 'for' &&
-    lowerCasedWord !== 'that' &&
-    lowerCasedWord !== 'on' &&
-    lowerCasedWord !== 'by' &&
-    lowerCasedWord !== 'an' &&
-    lowerCasedWord !== 'in' &&
-    lowerCasedWord !== 'or' &&
-    lowerCasedWord !== 'it' &&
-    lowerCasedWord !== 'but' &&
-    lowerCasedWord !== 'as' &&
-    lowerCasedWord !== 'if' &&
-    lowerCasedWord !== 'they' &&
-    lowerCasedWord !== 'we' &&
-    lowerCasedWord !== 'for' &&
-    lowerCasedWord !== 'with' &&
-    lowerCasedWord !== 'could' &&
-    lowerCasedWord !== 'was') {
+    if ( exceptedWords.indexOf(word) === -1 ) {
       source.push(word);
     }
   }.bind(this));
@@ -155,11 +125,12 @@ DataMiner.prototype.printDatas = function(countedWords) {
   var wordsWrapper = this.wordsWrapper;
   var randomChartCollection = [];
   var singleWords = {};
+  var frequencyList;
+
   randomChartCollection.push(this.leftRandomLocatingChart);
   randomChartCollection.push(this.rightRandomLocatingChart);
   randomChartCollection.push(this.upperRandomLocatingChart);
   randomChartCollection.push(this.lowerRandomLocatingChart);
-
   for (var key in countedWords) {
     if (countedWords[key] >= 2) {
       if (oftenUsedWords[countedWords[key]]) {
@@ -171,44 +142,40 @@ DataMiner.prototype.printDatas = function(countedWords) {
     }
     singleWords[key] = countedWords[key];
   }
-  console.log('oftenUsedWords: ', oftenUsedWords);
-  console.log('countedWords: ', countedWords);
-  console.log('keysOfOftenUsedWords: ', Object.keys(oftenUsedWords));
-
   for (var key in singleWords) {
     var left = Math.random()*100;
     var top = Math.random()*100;
     var newWord = document.createElement('div');
+
     newWord.classList.add('singleUsedWord');
     newWord.innerText = key;
-    newWord.style = `font-size: 15px; color: #222222; left: ${left}%; top: ${top}%; z-index: 1;`
+    newWord.style = `font-size: 15px; color: #222222; left: ${left}%; top: ${top}%; z-index: 1;`;
     this.singleUsedWordsWrapper.appendChild(newWord);
   }
-
-  var frequencyList = Object.keys(oftenUsedWords);
-
+  frequencyList = Object.keys(oftenUsedWords);
   for (var i = frequencyList.length-1; i >= 0; i--) {
     var thisFrequencyWords = oftenUsedWords[frequencyList[i]];
     var frequency = frequencyList[i];
-    console.log('frequency: ', frequency);
 
     for (var j = 0; j < thisFrequencyWords.length; j++) {
       var left = Math.random()*100;
       var top = Math.random()*100;
       var newWord = document.createElement('div');
       var randomColor = this.makeRandomColor();
-      var fontSize = 70 * ( frequencyList[i]/ frequencyList[frequencyList.length-1]);
+      var fontSize = 70 * ( frequencyList[i] / frequencyList[frequencyList.length - 1] );
       var width;
       var height;
       var styleBefore;
+      var randomIndex;
+      var chartToAppend;
+      var newWordWidth;
+      var newWordHeight;
 
       newWord.innerText = thisFrequencyWords[j];
       newWord.classList.add('words');
-      console.log(fontSize);
       if (!(i == frequencyList.length-1 && j == 0)) {
-        var randomIndex = Math.floor(Math.random()*4);
-        var chartToAppend = randomChartCollection[randomIndex];
-        console.log('randomChart: ', chartToAppend);
+        randomIndex = Math.floor(Math.random()*4);
+        chartToAppend = randomChartCollection[randomIndex];
         chartToAppend.appendChild(newWord);
       } else {
         this.wordsWrapper.appendChild(newWord);
@@ -216,10 +183,10 @@ DataMiner.prototype.printDatas = function(countedWords) {
       if (i === frequencyList.length-1 && j === 0) {
         width = newWord.offsetWidth;
         height = newWord.offsetHeight;
-        var newWordWidth = (newWord.offsetWidth / newWord.parentNode.offsetWidth) * 100;
-        var newWordHeight = (newWord.offsetHeight / newWord.parentNode.offsetHeight) * 100;
+        newWordWidth = (newWord.offsetWidth / newWord.parentNode.offsetWidth) * 100;
+        newWordHeight = (newWord.offsetHeight / newWord.parentNode.offsetHeight) * 100;
         newWord.classList.add('textShadowWhite');
-        newWord.style = `font-size: ${100}px; color: ${randomColor}; left: ${50 - (newWordWidth*3)}%; top: ${50 - (newWordHeight*3)}%; z-index: ${i+2};`;
+        newWord.style = `font-size: ${130}px; color: ${randomColor}; left: ${50 - (newWordWidth*3.5)}%; top: ${50 - (newWordHeight*3)}%; z-index: ${i+2};`;
         newWord.addEventListener('mouseout', function(event) {
           event.target.classList.remove('hoveredCenter');
           event.target.style.zIndex = styleInfo.zIndex;
@@ -228,23 +195,14 @@ DataMiner.prototype.printDatas = function(countedWords) {
         });
         newWord.addEventListener('mouseover', function(event,frequency) {
           var textBox = document.createElement('div');
+
           textBox.innerText = ` :${countedWords[event.target.innerText]}`;
           styleInfo.zIndex = event.target.style.zIndex;
           styleInfo.fontSize = event.target.style.fontSize;
           event.target.style.zIndex = '';
-          // event.target.style.fontSize = '';
           event.target.classList.add('hoveredCenter');
           event.target.appendChild(textBox);
         });
-        // newWord.addEventListener('click', function(event) {
-        //   function randomLocation () {
-        //     return Math.random()*100;
-        //   }
-        //   event.target.style.left = '';
-        //   event.target.style.top = '';
-        //   event.target.style.left = `${randomLocation()}%`;
-        //   event.target.style.top = `${randomLocation()}%`;
-        // });
       } else {
         newWord.classList.add('textShadowBlack');
         newWord.style = `font-size: ${fontSize}px; color: ${randomColor}; left: ${left}%; top: ${top}%; z-index: ${i+1};`;
@@ -256,6 +214,7 @@ DataMiner.prototype.printDatas = function(countedWords) {
         });
         newWord.addEventListener('mouseover', function(event) {
           var textBox = document.createElement('div');
+
           textBox.innerText = ` :${countedWords[event.target.innerText]}`;
           styleInfo.zIndex = event.target.style.zIndex;
           styleInfo.fontSize = event.target.style.fontSize;
@@ -263,7 +222,7 @@ DataMiner.prototype.printDatas = function(countedWords) {
           event.target.style.fontSize = '';
           event.target.classList.add('hovered');
           event.target.appendChild(textBox);
-        })
+        });
         newWord.addEventListener('click', function(event) {
           function randomLocation () {
             return Math.random()*100;
@@ -281,6 +240,7 @@ DataMiner.prototype.printDatas = function(countedWords) {
 DataMiner.prototype.makeRandomColor = function() {
   var letters = '0123456789ABCDEF';
   var color = '#';
+
   for (var i = 0; i < 6; i++) {
     color += letters[Math.floor(Math.random() * 16)];
   }
