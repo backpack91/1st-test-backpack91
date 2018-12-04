@@ -101,6 +101,7 @@ DataMiner.prototype.filterWords = function(words) {
     word[word.length-1] === ',' ||
     word[word.length-1] === '-' ||
     word[word.length-1] === ':' ||
+    word[word.length-1] === ';' ||
     word[word.length-1] === '.') {
       word = word.slice(0, word.length-1);
     }
