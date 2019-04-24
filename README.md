@@ -19,10 +19,6 @@ $ yarn dev (or npm run dev)
 # visit http://localhost:8080
 ```
 
-- HTML 수정: `index.ejs`를 수정하시면 됩니다.
-- JS 수정: `/app/index.js`를 수정하시면 됩니다.
-- CSS 수정: `/assets/styles/index.less`를 수정하시면 됩니다. (파일 형식을 `.scss`로 바꿔서 SCSS를 사용하여도 됩니다.)
-
 ## Features
 
 - [ ] 사용자가 텍스트를 입력할 수 있는 칸이 있습니다. (영문만 지원)
